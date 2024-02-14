@@ -18,15 +18,15 @@
             display: flex !important;
         }
         .mr-3{
-            margin-right: 10rem !important;
+            margin-inline-end: 10rem !important;
         }
         .col-md-4 {
-            flex: 0 0 33.3333333333%;
-            max-width: 33.3333333333%;
+            flex: 0 0 33%;
+            max-inline-size: 33%;
         }
         .col-md-6 {
             flex: 0 0 50%;
-            max-width: 50%;
+            max-inline-size: 50%;
         }
     </style>
 </head>

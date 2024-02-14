@@ -69,7 +69,7 @@ class UserController extends    Controller
         }
 
 
-        return redirect()->route('users.index');
+        return redirect()->route('user');
     }
 
     /**

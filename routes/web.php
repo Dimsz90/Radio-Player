@@ -8,17 +8,9 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\CetakController;
+use App\Http\Controllers\PengembalianController;
+use App\Http\Controllers\NotifikasismsController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
     return view('welcome');
@@ -36,6 +28,7 @@ Route::group(['prefix' => 'books'], function(){
     Route::get('{book}/edit',[BookController::class, 'edit'])->name('books.edit');
     Route::patch('{book}/update',[BookController::class,'update'])->name('books.update');
     Route::get('books/report', [BookController::class, 'report'])->name('books.report');
+    Route::get('rekap', [BookController::class,'rekap' ])->name('books.rekap');
 
 });
 
@@ -52,31 +45,33 @@ Route::group(['prefix' => 'user'], function(){
     Route::patch('{user}/update',[UserController::class,'update'])->name('user.update');
     Route::delete('{user}/destroy',[UserController::class, 'destroy'])->name('user.destroy');
     });
-Route::group(['prefix' => 'cetak'], function(){
-    Route::get('/index',[CetakController::class,'index'])->name('cetak');
-    Route::get('/detail/{role}',[CetakController::class,'detail'])->name('cetak.detail');
-    Route::get('/kartu/{role}',[CetakController::class,'kartu'])->name('cetak.kartu');
+    Route::group(['prefix' => 'cetak'], function(){
+        Route::get('/index',[CetakController::class,'index'])->name('cetak');
+        Route::get('/detail/{id}',[CetakController::class,'detail'])->name('cetak.detail');
+        Route::get('/kartu/{id}',[CetakController::class,'kartu'])->name('cetak.kartu');
     });
+    
 Route::group(['prefix' => 'peminjaman'],function(){
     Route::get('/borrowing',[PeminjamanController::class,'index'])->name('peminjaman');
     Route::get('create', [PeminjamanController::class, 'create'])->name('peminjaman.create');
     Route::post('store', [PeminjamanController::class, 'store'])->name('peminjaman.store');
+    Route::get('all', [PeminjamanController::class,'all' ])->name('peminjaman.all');
+    Route::get('periode', [PeminjamanController::class,'periode' ])->name('peminjaman.periode');
 });
 
-    Route::group(['prefix' => 'rekap-laporan'], function(){
-        Route::get('/buku', [PeminjamanController::class, 'rekapbuku'])->name('rekap-laporan.buku');
-        Route::get('/periode', [PeminjamanController::class, 'periode'])->name('rekap-laporan.periode');
-        Route::get('/peminjaman', [PeminjamanController::class, 'peminjaman'])->name('rekap-laporan.peminjaman');
-        Route::get('/pengembalian', [PengembalianController::class, 'show'])->name('rekap-laporan.pengembalian');
-        Route::get('/periode/pengembalian', [PengembalianController::class, 'periode'])->name('rekap-laporan.periode.pengembalian');
-        Route::get('/semua/pengembalian', [PengembalianController::class, 'all'])->name('rekap-laporan.semua.pengembalian');
-    });
-    Route::group(['prefix' =>  'notifikasi'], function(){
-        route::get('informasi/{borrowing}',[NotifikasismsController::class, 'create'])->name('notifikasi.informasi');
-    
-        route::post('denda/{borrowing}','NotifikasismsController@denda')->name('notifikasi.denda');
-        route::post('rimainder/{borrowing}','NotifikasismsController@rimainder')->name('notifikasi.rimainder');
-    });
-    
-
  
+    
+    Route::group(['prefix' =>  'notifikasi'], function(){
+        Route::get('informasi/{borrowing}',[NotifikasismsController::class, 'create'])->name('notifikasi.informasi');
+    
+        Route::post('denda/{borrowing}',[NotifikasismsController::class, 'denda'])->name('notifikasi.denda');
+        Route::post('rimainder/{borrowing}',[NotifikasismsController::class, 'rimainder'])->name('notifikasi.rimainder');
+    });
+    Route::group(['prefix' => 'pengembalian'], function(){
+        Route::get('index', [PengembalianController::class,'index'])->name('pengembalian');
+        Route::get('create/{borrowing}', [PengembalianController::class,'create'])->name('pengembalian.create');
+        Route::post('store/{borrowing}', [PengembalianController::class, 'store'])->name('pengembalian.store');
+        Route::get('all', [PengembalianController::class,'all' ])->name('pengembalian.all');
+        Route::get('periode', [PengembalianController::class,'periode' ])->name('pengembalian.periode');
+    });
+    

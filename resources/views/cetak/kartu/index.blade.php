@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 
 @section('content')
@@ -36,12 +37,13 @@
                                     <a href="{{route('cetak.kartu',$user->id)}}" class="btn btn-warning btn-sm">Cetak Kartu</a>
                                 </td>
                             </tr>
-                            {{$users->links()}}
                         @endforeach
                     </tbody>
                 </table>
+                {{$users->links()}}
             </div>
         </div>
         
     </div>
 @endsection
+

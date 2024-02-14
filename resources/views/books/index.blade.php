@@ -22,7 +22,7 @@
 						<a class="btn btn-info" href="{{route('books.create')}}">
 							Tambah Stock Buku
 						</a>
-						<a class="btn btn-outline-secondary" href="{{route('rekap-laporan.buku')}}">
+						<a class="btn btn-outline-secondary" href="{{route('books.rekap')}}">
 							Rekap Semua Data Buku
 						</a>
 					</div>
@@ -83,12 +83,12 @@
 				@endforeach
 			</ul>
 		</div>
-		@forelse($books as $book)
-			<div class="col-md-9">
-				<div class="card border-0">
-					<div class="card-body">
-						<div class="row">
-							<div class="col-md-4">
+		<div class="col-md-9">
+			<div class="row">
+				@forelse($books as $book)
+					<div class="col-md-4 col-sm-6 col-xs-12">
+						<div class="card border-0 mb-3">
+							<div class="card-body">
 								<img src="{{ url('storage/'. $book->images) }}" class="card-img-top" alt="...">
 								<h3 class="font-weight-bold pt-3">{{$book->name}}</h3>
 								<p class="text-muted">
@@ -105,13 +105,12 @@
 							</div>
 						</div>
 					</div>
-				</div>
+					@empty
+					<h1 class="text-center">Maaf List Buku belum tersedia</h1>
+				@endforelse
 			</div>
-
 			{{$books->links()}}
-			@empty
-			<h1 class="text-center">Maaf List Buku belum tersedia</h1>
-		@endforelse
+		</div>
 	</div>
 @endrole
 

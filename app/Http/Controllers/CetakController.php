@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use PDF;
+use Elibyy\TCPDF\Facades\TCPDF;
 use App\Models\User;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -12,28 +12,33 @@ class CetakController extends Controller
     public function index()
     {
         $users = User::whereHas(
-                    'roles', function($q){
-                        $q->where('name', 'users');
-                    }
-                )->get();
+            'roles', function($q){
+                $q->where('name', 'siswa');
+            }
+        )->paginate(10);
         return view('cetak.kartu.index', compact('users'));
     }
 
-    public function show($id)
+    public function detail($id)
     {
-        $user = Role::with('users')->where('name','user')->findOrFail($id);
+        $user = Role::with('users')->where('name','siswa')->findOrFail($id);
 
         return view('cetak.kartu.show',compact('user'));
     }
-    public function cetak($id)
+    public function kartu($id)
     {
-        $users = User::whereHas(
+        $user = User::whereHas(
                     'roles', function($q){
-                        $q->where('name', 'user');
+                        $q->where('name', 'siswa');
                     }
                 )->findOrFail($id);
-        $pdf = PDF::loadView('cetak.kartu.user', compact('user'))->setPaper('a4', 'potrait');
-
-        return $pdf->stream('kartu_user.pdf');
+        $view = view('cetak.kartu.anggota', compact('user'))->render();
+        $pdf = new TCPDF;
+        $pdf::SetTitle('Kartu Anggota');
+        $pdf::AddPage();
+        $pdf::writeHTML($view, true, false, true, false, '');
+        $pdf::Output('kartu_anggota.pdf');
     }
+    
 }
+

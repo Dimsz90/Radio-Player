@@ -43,12 +43,12 @@
         </div>
         <div class="form-group">
             <label for="level">Akses</label>
-            <select name="roles" id="level" class="form-control">
+            <select name="roles[]" id="level" class="form-control">
                 <option value="">Pilih akses</option>
                 @foreach ($roles as $role)
                     <option value="{{$role->id}}">{{$role->name}}</option>
                 @endforeach
-            </select>       
+            </select>
         </div>
         <div class="form-group">
             <label for="alamat">

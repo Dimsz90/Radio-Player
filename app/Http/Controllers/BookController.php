@@ -6,7 +6,9 @@ use App\Models\Category;
 use App\Models\Book;
 use Intervention\Image\Facades\Image;
 use spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use App\Models\Borrowing;
 
 class BookController extends Controller
 {
@@ -110,25 +112,44 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
 {
+    if (Borrowing::where('book_id', $book->id)->exists()) {
+        flash()->error('masih ada yang pinjem.');
+        return redirect()->route('books');
+    }
+
+    Storage::delete('public/' . $book->images);
+
     $book->delete();
     flash()->success('selamat buku berhasil dihapus.');
     return redirect()->route('books');
 }
-    private function validateRequest(){
-        return tap(request()->validate([
-            'category_id'       => 'required',
-            'name'              => 'required',
-            'description'       => 'required',
-            'penerbit'          => 'required',
-            'tanggal_terbit'    =>  'required',
-            'stock'             =>  'required',
-            'images'    => 'required|image|max:5000',
-        ]), function(){
-            if(request()->hasFile('images')){
-                request()->validate([
-                    'images'    => 'required|image|max:5000',
-                ]);
-            }
-        });
+public function rekap()
+{
+    $books = Book::all();
+
+    $pdf = new \TCPDF();
+    $pdf->AddPage();
+    $view = \View::make('books.rekap', compact('books'))->render();
+    $pdf->writeHTML($view, true, false, true, false, '');
+
+    return $pdf->Output('rekap_buku.pdf');
+}
+private function validateRequest(){
+    $validatedData = request()->validate([
+        'category_id'       => 'required',
+        'name'              => 'required',
+        'description'       => 'required',
+        'penerbit'          => 'required',
+        'tanggal_terbit'    =>  'required',
+        'stock'             =>  'required',
+        'images'            => 'required|image|max:5000',
+    ]);
+
+    if(request()->hasFile('images')){
+        $validatedData['images'] = request()->file('images')->store('uploads', 'public');
     }
+
+    return $validatedData;
+}
+
 }

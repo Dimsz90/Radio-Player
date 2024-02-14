@@ -18,6 +18,7 @@
 </head>
 <body>
     <div id="app">
+        
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -45,8 +46,12 @@
                             <a class="nav-link" href="{{ route('peminjaman') }}">{{ __('peminjaman') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('cetak') }}">{{ __('cetak') }}</a>
+                            <a class="nav-link" href="{{ route('cetak') }}">{{ __('cetak-kartu') }}</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('pengembalian') }}">{{ __('pengembalian') }}</a>
+                        </li>
+                        
                         @endrole
                     </ul>
 

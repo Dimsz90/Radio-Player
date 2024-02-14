@@ -4,23 +4,15 @@
 <div class="row">
     <div class="col-md-12">
         <div class="text-center">
-            <P>
-                <b>
-                    <h3>SDN JATIMULYA 08
-                        <br>
-                        Jl.K.H.NOER ALI KALIMALANG, JATIMULYA, Kec. Tambun Selatan,
-                    </h3>
-                    <hr>
-                </b>
-            </P>
+            <h3>SDN JATIMULYA 08</h3>
+            <p>Jl.K.H.NOER ALI KALIMALANG, JATIMULYA, Kec. Tambun Selatan</p>
+            <hr>
         </div>
-        <u>
-            <h4>Rekap laporan buku</h4>
-        </u>
+        <h4>Rekap laporan buku</h4>
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Categori</th>
+                    <th>Kategori</th>
                     <th>Nama Buku</th>
                     <th>Penerbit</th>
                     <th>Tanggal Terbit</th>
@@ -28,7 +20,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($bukus as $buku)
+                @foreach($books as $buku)
                     <tr>
                         <td>{{$buku->category->first()->name}}</td>
                         <td>{{$buku->name}}</td>
@@ -37,11 +29,12 @@
                         <td>{{$buku->stock}}</td>
                     </tr>
                 @endforeach
-
             </tbody>
-            <tr>
-                <td colspan="5" class=>Jumlah buku : {{count($bukus)}}</td>
-            </tr>
+            <tfoot>
+                <tr>
+                    <td colspan="5">Jumlah buku: {{count($books)}}</td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>
