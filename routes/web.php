@@ -67,11 +67,13 @@ Route::group(['prefix' => 'peminjaman'],function(){
         Route::post('denda/{borrowing}',[NotifikasismsController::class, 'denda'])->name('notifikasi.denda');
         Route::post('rimainder/{borrowing}',[NotifikasismsController::class, 'rimainder'])->name('notifikasi.rimainder');
     });
+
     Route::group(['prefix' => 'pengembalian'], function(){
         Route::get('index', [PengembalianController::class,'index'])->name('pengembalian');
         Route::get('create/{borrowing}', [PengembalianController::class,'create'])->name('pengembalian.create');
         Route::post('store/{borrowing}', [PengembalianController::class, 'store'])->name('pengembalian.store');
         Route::get('all', [PengembalianController::class,'all' ])->name('pengembalian.all');
         Route::get('periode', [PengembalianController::class,'periode' ])->name('pengembalian.periode');
+        Route::get('show',[PengembalianController::class,'show'])->name('pengembalian.show');
     });
     

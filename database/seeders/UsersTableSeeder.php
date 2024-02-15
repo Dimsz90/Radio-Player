@@ -38,7 +38,7 @@ class UsersTableSeeder extends Seeder
             'email'    => 'siswa@mail.com',
             'alamat'   =>  'alam',
             'nis'      => '1',
-            'no_handphone' => '123',
+            'no_handphone' => '0895393384782',
             'password' => bcrypt('mail'),
         ]);
         $siswa->assignRole('siswa');

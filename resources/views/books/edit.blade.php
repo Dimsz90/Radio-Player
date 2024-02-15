@@ -37,6 +37,10 @@
         <label for="stock">Stock:</label>
         <input type="number" id="stock" name="stock" value="{{ $book->stock }}" required class="form-control">
     </div>
+    <div class="form-group">
+				<label for="">Cover Buku</label>
+				<input type="file" name="images" id="" class="form-control">
+			</div>
 
     <button type="submit" class="btn btn-primary">Update Buku</button>
 </form>

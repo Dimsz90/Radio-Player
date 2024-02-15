@@ -95,7 +95,8 @@ class BookController extends Controller
             'description' => 'required',
             'penerbit' => 'required',
             'tanggal_terbit' => 'required|date',
-            'stock' => 'required|integer'
+            'stock' => 'required|integer',
+            'images' => 'required'
         ]);
 
         $book->update($request->all());

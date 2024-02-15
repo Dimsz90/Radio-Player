@@ -33,7 +33,6 @@
                         <button type="submit" class="btn btn-info">Cari laporan</button>
                     </div>
                 </div>
-
             </div>
         </div>
     </form>
@@ -45,7 +44,7 @@
                 <th>Tanggal Pinjam</th>
                 <th>Tanggal Kembali</th>
                 <th>Durasi Peminjaman</th>
-                <th>Denda</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -62,7 +61,7 @@
                         $durasi = ($tgl_kembali - $tgl_pinjam) / 86400;
                     ?>
                     @if ($durasi < 0)
-                        Durasi Habis / -{{ abs($durasi) }} Hari
+                        Terlambat {{ abs($durasi) }} Hari
                     @else
                         {{ $durasi }} Hari
                     @endif

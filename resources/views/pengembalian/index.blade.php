@@ -8,34 +8,7 @@
         </li>
     </ol>
 </nav>
-<div class="card card-body border-0">
-    <form action="{{route('pengembalian.periode')}}" class="mb-3" method="get">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="">Dari Tanggal</label>
-                    <input type="date" name="tgl_awal" id="" class="form-control">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="">Dari Tanggal</label>
-                    <input type="date" name="tgl_akhir" id="" class="form-control">
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="d-flex">
-                    <div class="mr-auto">
-                        <a href="{{route('pengembalian.all')}}" class="btn btn-secondary" >Rekap Seluruh Laporan</a>
-                    </div>
-                    <div>
-                        <button type="submit" class="btn btn-info">Cari laporan</button>
-                    </div>
-                </div>
 
-            </div>
-        </div>
-    </form>
 <div class="card card-body border-0">
     <table class="table table-striped">
         <thead>
@@ -80,6 +53,9 @@
         </tbody>
 
     </table>
+    <td>
+                        <a href="{{route('pengembalian.show')}}" class="btn btn-outline-info btn-sm" methode="post">history pengembalian Buku</a>
+                    </td>
 </div>
 
 @endsection

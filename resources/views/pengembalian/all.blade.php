@@ -33,7 +33,7 @@
                     <tr>
                         <td>{{$get->user->name}}</td>
                         <td>{{$get->book->name}}</td>
-                        <td>{{$get->tgl_pinjm}}</td>
+                        <td>{{$get->tgl_pinjam}}</td>
                         <td>{{$get->tgl_kembali}}</td>
                         <td>{{$get->durasi}}</td>
                         <td>{{$get->denda}}</td>

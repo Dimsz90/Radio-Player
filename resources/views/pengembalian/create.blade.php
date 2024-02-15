@@ -27,7 +27,7 @@
         </div>
         <div class="form-group">
             <label for="">Tangga Pinjam</label>
-            <input type="text" name="tgl_pinjm" class="form-control" value="{{$pengembalian->tgl_pinjam}}"  id="">
+            <input type="text" name="tgl_pinjam" class="form-control" value="{{$pengembalian->tgl_pinjam}}"  id="">
         </div>
         <div class="form-group">
             <label for="">Tanggal Kembali</label>
@@ -37,7 +37,8 @@
             $datetime2 = strtotime($date) ;
             $datenow = strtotime($pengembalian->tgl_pinjam);
             $durasi = ($datenow - $datetime2) / 86400 ;
-            $durasi2 = ($durasi) + 7;
+            $durasi2 = ($durasi) + 7 ;
+
         ?>
         @if ($durasi < -7 )
             <div class="form-group">
@@ -55,9 +56,9 @@
         @if ($durasi == -5)
             <div class="form-group">
                 <label for="">Denda</label>
-                <input type="hidden" name="denda" class="form-control" value="0">
+                <input type="hidden" name="denda" class="form-control" value="{{ number_format($denda) }}">
             </div>
-            @elseif ($durasi < -7)
+            @elseif ($durasi > -7)
             <?php $denda = abs($durasi2) * 1000 ; ?>
             <div class="form-group">
                 <label for="">Denda</label>
@@ -74,4 +75,5 @@
         <button type="submit" class="btn btn-info">Kembalikan Buku</button>
     </form>
 </div>
+
 @endsection

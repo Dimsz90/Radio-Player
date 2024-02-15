@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use PDF;
+
 use App\Models\Borrowing;
 use App\Models\Pengembalian;
 use App\Models\Book;
@@ -34,20 +34,21 @@ class PengembalianController extends Controller
         $this->validate($request,[
             'durasi'        => 'required',
             'jumlah_pinjam' => 'required',
-            'denda'         => 'required',
-            'tgl_pinjm'    => 'required',
+            'tgl_pinjam'    => 'required',
             'tgl_kembali'   => 'required',
         ]);
 
-        $pengembalian = Pengembalian::create([
-            'book_id'       => $borrowing->book->id,
-            'user_id'       => $borrowing->user->id,
-            'durasi'        => $request->input('durasi'),
-            'jumlah_pinjam' => $request->input('jumlah_pinjam'),
-            'denda'         => $request->input('denda'),
-            'tgl_pinjam'     => $request->input('tgl_pinjam'),
-            'tgl_kembali'   => $request->input('tgl_kembali'),
-        ]);
+
+        $pengembalian = new Pengembalian;
+        $pengembalian->book_id = $borrowing->book->id;
+        $pengembalian->user_id = $borrowing->user->id;
+        $pengembalian->durasi = $request->durasi;
+        $pengembalian->jumlah_pinjam = $request->jumlah_pinjam;
+        $pengembalian->denda = $request->denda ?? 0;
+        $pengembalian->tgl_pinjam = $request->tgl_pinjam;
+        $pengembalian->tgl_kembali = $request->tgl_kembali;
+        $pengembalian->save();
+
 
         $borrowing->delete();
 
@@ -57,7 +58,7 @@ class PengembalianController extends Controller
 
         $book->save();
 
-        return redirect()->route('pengembalian.index')->with(['success', 'Pengembalain behasil dilakukan']);
+        return redirect()->route('pengembalian')->with(['success', 'Pengembalain behasil dilakukan']);
     }
 
     public function show()
@@ -65,7 +66,7 @@ class PengembalianController extends Controller
         $date = now();
         $pengembalians = Pengembalian::paginate(5);
 
-        return view('laporan.pengembalian.index', compact('pengembalians','date'));
+        return view('pengembalian.show', compact('pengembalians','date'));
     }
     public function periode(Request $request)
 {
@@ -79,18 +80,21 @@ class PengembalianController extends Controller
     $view = \View::make('pengembalian.periode', compact('pengembalians'))->render();
     $pdf->writeHTML($view, true, false, true, false, '');
 
-    return $pdf->Output('rekap_periode_peminjaman.pdf');
+    return $pdf->Output('rekap_periode_peminjaman.pdf','i');
 }
 
 public function all()
 {
-    $pengembalians = Borrowing::all();
+    $pengembalians = Pengembalian::all();
 
     $pdf = new \TCPDF();
     $pdf->AddPage();
     $view = \View::make('pengembalian.all', compact('pengembalians'))->render();
     $pdf->writeHTML($view, true, false, true, false, '');
 
-    return $pdf->Output('rekap_laporan_semua_pengembalian.pdf');
+    return 
+    $pdf->Output('rekap_laporan_semua_pengembalian.pdf', 'i');
 }
+
 }
+
