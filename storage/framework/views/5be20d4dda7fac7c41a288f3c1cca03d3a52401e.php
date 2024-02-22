@@ -1,6 +1,6 @@
-@extends('layouts.app')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page">
@@ -9,29 +9,30 @@
     </ol>
 </nav>
 <div class="card card-body border-0">
-    <form action="{{route('pengembalian.store', $pengembalian->id)}}" method="post">
-        @csrf
-        @if(session('success'))
+    <form action="<?php echo e(route('pengembalian.store', $pengembalian->id)); ?>" method="post">
+        <?php echo csrf_field(); ?>
+        <?php if(session('success')): ?>
             <div class="alert alert-success">
-                {{ session('success')}}
+                <?php echo e(session('success')); ?>
+
             </div>
-        @endif
+        <?php endif; ?>
 
         <div class="form-group">
             <label for="">Judul Buku</label>
-            <input type="text" name="judul" class="form-control" value="{{$pengembalian->first()->book->name}}" disabled id="">
+            <input type="text" name="judul" class="form-control" value="<?php echo e($pengembalian->first()->book->name); ?>" disabled id="">
         </div>
         <div class="form-group">
             <label for="">Nama Siswa</label>
-            <input type="text" name="name" class="form-control" value="{{$pengembalian->first()->user->name}}" disabled id="">
+            <input type="text" name="name" class="form-control" value="<?php echo e($pengembalian->first()->user->name); ?>" disabled id="">
         </div>
         <div class="form-group">
             <label for="">Tangga Pinjam</label>
-            <input type="text" name="tgl_pinjam" class="form-control" value="{{$pengembalian->tgl_pinjam}}"  id="tgl_pinjam" readonly>
+            <input type="text" name="tgl_pinjam" class="form-control" value="<?php echo e($pengembalian->tgl_pinjam); ?>"  id="tgl_pinjam" readonly>
         </div>
         <div class="form-group">
             <label for="">Tanggal Kembali</label>
-            <input type="text" name="tgl_kembali" class="form-control" value="{{$pengembalian->tgl_kembali}}"  id="tgl_kembali" readonly>
+            <input type="text" name="tgl_kembali" class="form-control" value="<?php echo e($pengembalian->tgl_kembali); ?>"  id="tgl_kembali" readonly>
         </div>
         <div class="form-group">
             <label for="">Durasi Peminjaman</label>
@@ -45,7 +46,7 @@
         
         <div class="form-group">
             <label for="">Jumlah pinjam</label>
-            <input type="text" name="jumlah_pinjam" value="{{$pengembalian->jumlah_pinjam}}" id="" class="form-control" readonly>
+            <input type="text" name="jumlah_pinjam" value="<?php echo e($pengembalian->jumlah_pinjam); ?>" id="" class="form-control" readonly>
         </div>
 <br>
         <button type="submit" class="btn btn-info" id="returnBookButton">Kembalikan Buku</button>
@@ -67,4 +68,5 @@ $(document).ready(function() {
         
     </form>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\dimas\resources\views/pengembalian/create.blade.php ENDPATH**/ ?>

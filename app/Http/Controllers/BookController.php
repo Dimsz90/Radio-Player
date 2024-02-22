@@ -48,16 +48,32 @@ class BookController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
-       $book = Book::create($this->validateRequest());
-
-
-
+        $request->validate([
+            'category_id'       => 'required',
+            'name'              => 'required',
+            'description'       => 'required',
+            'penerbit'          => 'required',
+            'tanggal_terbit'    =>  'required',
+            'stock'             =>  'required',
+            'images'            => 'required|image|max:50000',
+        ]);
+    
+        // Proses penyimpanan data buku...
+        $book = Book::create($request->all());
+    
+        // Proses penyimpanan gambar...
+        if($request->hasFile('images')) {
+            $imageName = time().'.'.$request->images->extension();  
+            $request->images->move(public_path('uploads'), $imageName);
+            $book->update(['images' => $imageName]);
+        }
+    
         flash()->success('Buku berhasi ditambahkan');
-
         return redirect()->route('books');
     }
+    
 
     /**
      * Display the specified resource.
@@ -96,15 +112,26 @@ class BookController extends Controller
             'penerbit' => 'required',
             'tanggal_terbit' => 'required|date',
             'stock' => 'required|integer',
-            'images' => 'required'
+            
         ]);
 
         $book->update($request->all());
 
-        flash()->success('data buku berhasil diupdate.');
 
-        return redirect()->route('books');
+    // Proses penyimpanan gambar...
+    if($request->hasFile('images')) {
+        // Hapus gambar lama...
+        Storage::delete('public/uploads/' . $book->images);
+
+        // Unggah gambar baru...
+        $imageName = time().'.'.$request->images->extension();  
+        $request->images->move(public_path('uploads'), $imageName);
+        $book->update(['images' => $imageName]);
     }
+
+    flash()->success('Data buku berhasil diupdate.');
+    return redirect()->route('books');
+}
     /**
      * Remove the specified resource from storage.
      *
@@ -136,21 +163,30 @@ public function rekap()
     return $pdf->Output('rekap_buku.pdf');
 }
 private function validateRequest(){
-    $validatedData = request()->validate([
+    return tap(request()->validate([
         'category_id'       => 'required',
         'name'              => 'required',
         'description'       => 'required',
         'penerbit'          => 'required',
         'tanggal_terbit'    =>  'required',
         'stock'             =>  'required',
-        'images'            => 'required|image|max:5000',
-    ]);
-
-    if(request()->hasFile('images')){
-        $validatedData['images'] = request()->file('images')->store('uploads', 'public');
-    }
-
-    return $validatedData;
+        'images'    => 'required|image|max:50000',
+    ]), function(){
+        if(request()->hasFile('images')){
+            request()->validate([
+                'images'    => 'required|image|max:50000',
+            ]);
+        }
+    });
 }
+private function storeImage($book){
+    if(request()->has('images')){
+        $book->update([
+            'images'  => request()->images->store('uploads','public'),
+        ]);
 
+        $images = Image::make(public_path('storage/'. $book->images))->fit(300,300, null, 'top-left');
+        $images->save();
 }
+}
+};

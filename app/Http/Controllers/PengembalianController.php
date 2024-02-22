@@ -44,7 +44,7 @@ class PengembalianController extends Controller
         $pengembalian->user_id = $borrowing->user->id;
         $pengembalian->durasi = $request->durasi;
         $pengembalian->jumlah_pinjam = $request->jumlah_pinjam;
-        $pengembalian->denda = $request->denda ?? 0;
+        $pengembalian->denda = $request->denda ?? '-';
         $pengembalian->tgl_pinjam = $request->tgl_pinjam;
         $pengembalian->tgl_kembali = $request->tgl_kembali;
         $pengembalian->save();

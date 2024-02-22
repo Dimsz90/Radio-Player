@@ -1,6 +1,6 @@
-@extends('layouts.app')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item active" aria-current="page">
@@ -10,7 +10,7 @@
 </nav>
 
 <div class="card card-body border-0">
-    <form action="{{route('pengembalian.periode')}}" class="mb-3" method="get">
+    <form action="<?php echo e(route('pengembalian.periode')); ?>" class="mb-3" method="get">
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -27,7 +27,7 @@
             <div class="col-md-12">
                 <div class="d-flex">
                     <div class="mr-auto">
-                        <a href="{{route('pengembalian.all')}}" class="btn btn-secondary">Rekap Seluruh Laporan</a>
+                        <a href="<?php echo e(route('pengembalian.all')); ?>" class="btn btn-secondary">Rekap Seluruh Laporan</a>
                     </div>
                     <div>
                         <button type="submit" class="btn btn-info">Cari laporan</button>
@@ -49,23 +49,24 @@
             </tr>
         </thead>
         <tbody>
-            @forelse ($pengembalians as $pengembalian)
+            <?php $__empty_1 = true; $__currentLoopData = $pengembalians; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pengembalian): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                 <tr>
-                    <td>{{$pengembalian->book->name}}</td>
-                    <td>{{$pengembalian->user->name}}</td>
-                    <td>{{$pengembalian->tgl_pinjam}}</td>
-                    <td>{{$pengembalian->tgl_kembali}}</td>
-                    <td>{{$pengembalian->durasi}} Hari</td>
-                    <td>{{$pengembalian->denda}}</td>
+                    <td><?php echo e($pengembalian->book->name); ?></td>
+                    <td><?php echo e($pengembalian->user->name); ?></td>
+                    <td><?php echo e($pengembalian->tgl_pinjam); ?></td>
+                    <td><?php echo e($pengembalian->tgl_kembali); ?></td>
+                    <td><?php echo e($pengembalian->durasi); ?> Hari</td>
+                    <td><?php echo e($pengembalian->denda); ?></td>
                 </tr>
-            @empty
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                 <tr>
                     <td colspan="8" class="text-center">Maaf data Pengembalian belum tersedia</td>
                 </tr>
-            @endforelse
+            <?php endif; ?>
         </tbody>
 
     </table>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\dimas\resources\views/pengembalian/show.blade.php ENDPATH**/ ?>

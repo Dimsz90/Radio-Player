@@ -16,7 +16,7 @@
         <div class="">
             <h4>Rekap peminjaman buku</h4>
             @if (request('tgl_awal'))
-            <small>Dari tanggal {{ request('tgl_pinjam') }} sampai tanggal {{ request('tgl_akhir') }}</small>
+            <small>Dari tanggal {{ request('tgl_awal') }} sampai tanggal {{ request('tgl_akhir') }}</small>
             @endif
         </div>
         <br>

@@ -53,7 +53,7 @@ Route::group(['prefix' => 'user'], function(){
     
 Route::group(['prefix' => 'peminjaman'],function(){
     Route::get('/borrowing',[PeminjamanController::class,'index'])->name('peminjaman');
-    Route::get('create', [PeminjamanController::class, 'create'])->name('peminjaman.create');
+    Route::get('create/{id}', [PeminjamanController::class, 'create'])->name('peminjaman.create');
     Route::post('store', [PeminjamanController::class, 'store'])->name('peminjaman.store');
     Route::get('all', [PeminjamanController::class,'all' ])->name('peminjaman.all');
     Route::get('periode', [PeminjamanController::class,'periode' ])->name('peminjaman.periode');

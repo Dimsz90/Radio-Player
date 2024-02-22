@@ -1,71 +1,51 @@
-@extends('layouts.app')
+@extends('layouts.cetak')
 
 @section('content')
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">
-            Laporan Pengembalian
-        </li>
-    </ol>
-</nav>
-
-<div class="card card-body border-0">
-    <form action="{{route('pengembalian.periode')}}" class="mb-3" method="GET">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="">Dari Tanggal</label>
-                    <input type="date" name="tgl_awal" id="" class="form-control">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="">Dari Tanggal</label>
-                    <input type="date" name="tgl_akhir" id="" class="form-control">
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="d-flex">
-                    <div class="mr-auto">
-                        <a href="{{route('pengembalian.all')}}" class="btn btn-secondary">Rekap Seluruh Laporan</a>
-                    </div>
-                    <div>
-                        <button type="submit" class="btn btn-info">Cari laporan</button>
-                    </div>
-                </div>
-
-            </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="text-center">
+            <P>
+                <b>
+                    <h3>SDN JATIMULYA 08
+                        <br>
+                        Jl.K.H.NOER ALI KALIMALANG, JATIMULYA, Kec. Tambun Selatan,
+                    </h3>
+                    <hr>
+                </P>
         </div>
-    </form>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Buku</th>
-                <th>Nama Siswa</th>
-                <th>Tanggal Pinjam</th>
-                <th>Tanggal Kembali</th>
-                <th>Durasi Peminjaman</th>
-                <th>Denda</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse ($pengembalians as $pengembalian)
+        <div class="">
+            <h4>Rekap pengembalian buku</h4>
+            @if (request('tgl_awal'))
+            <small>Dari tanggal {{ request('tgl_awal') }} sampai tanggal {{ request('tgl_akhir') }}</small>
+            @endif
+        </div>
+        <br>
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td>{{$pengembalian->book->name}}</td>
-                    <td>{{$pengembalian->user->name}}</td>
-                    <td>{{$pengembalian->tgl_pinjm}}</td>
-                    <td>{{$pengembalian->tgl_kembali}}</td>
-                    <td>{{$pengembalian->durasi}} Hari</td>
-                    <td>{{$pengembalian->denda}}</td>
+                    <th>Nama peminjam</th>
+                    <th>Judul</th>
+                    <th>Tanggal Pinjam</th>
+                    <th>Tanggal Kembali</th>
+                    <th>Durasi</th>
+                    <th>Denda</th>
                 </tr>
-            @empty
-                <tr>
-                    <td colspan="8" class="text-center">Maaf data Pengembalian belum tersedia</td>
-                </tr>
-            @endforelse
-        </tbody>
+            </thead>
+            <tbody>
+                @forelse($pengembalians as $get)
+                    <tr>
+                        <td>{{$get->user->name}}</td>
+                        <td>{{$get->book->name}}</td>
+                        <td>{{$get->tgl_pinjam}}</td>
+                        <td>{{$get->tgl_kembali}}</td>
+                        <td>{{$get->durasi}}</td>
+                        <td>{{$get->denda}}</td>
+                    </tr>
+                    @empty
 
-    </table>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 </div>
-
 @endsection

@@ -39,13 +39,14 @@ class PeminjamanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        $books = Book::all();
-
+        $books = Book::findOrFail($id);
+    
         return view('peminjaman.create', compact('books'));
     }
-
+    
+    
     /**
      * Store a newly created resource in storage.
      *

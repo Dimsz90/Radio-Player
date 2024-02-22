@@ -9,7 +9,7 @@
 	  </ol>
 	</nav>
 	<div class="card card-body border-0">
-	<form action="{{ route('books.update', $book) }}" method="POST">
+	<form action="{{ route('books.update', $book) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PATCH')
 
