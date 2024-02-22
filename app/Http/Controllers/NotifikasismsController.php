@@ -74,7 +74,7 @@ class NotifikasismsController extends Controller
                             'destinations' => [
                                 ['to' => '+62895393384782']
                             ],
-                            'from' => 'OSAS ',
+                            'from' => 'PERPUS ',
                             'text' => $text
                         ]
                     ]

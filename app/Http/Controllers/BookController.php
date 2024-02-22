@@ -118,12 +118,13 @@ class BookController extends Controller
         $book->update($request->all());
 
 
-    // Proses penyimpanan gambar...
+
+
     if($request->hasFile('images')) {
-        // Hapus gambar lama...
+        // Hapus gambar lama
         Storage::delete('public/uploads/' . $book->images);
 
-        // Unggah gambar baru...
+  
         $imageName = time().'.'.$request->images->extension();  
         $request->images->move(public_path('uploads'), $imageName);
         $book->update(['images' => $imageName]);
@@ -179,6 +180,7 @@ private function validateRequest(){
         }
     });
 }
+
 private function storeImage($book){
     if(request()->has('images')){
         $book->update([
